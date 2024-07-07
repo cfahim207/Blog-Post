@@ -1,0 +1,56 @@
+{% extends "base.html" %} {% block content %}
+{% if messages %} 
+{% for m in messages %}
+
+<p class="bg-success text-white p-3 mt-5 text-center">{{m}}</p>
+
+{% endfor %}
+
+{% endif %}
+
+
+<div class='mt-5 text-center'>
+  <h1>Hello: {{user.first_name}} {{user.last_name}}</h1>
+    <h1 class="mt-3"> Welcome to your Profile Page </h1>
+
+
+<a class="btn btn-success mt-3 " href="{% url "updateprofile" %}">Edit Your Information</a>
+
+</div>
+
+
+<div class="d-flex flex-wrap justify-content-center px-5 pt-5">
+  {% for post in data %}
+
+  <div class="w-50" >
+    <div class="card m-2 p-2"  >
+      <div class="card-body text-center">
+        <img src="{{post.image.url}}" class="card-img-top" alt="...">
+        <h4 class="card-title mb-3">{{post.title}}</h4>
+        <p class="card-text"> {{post.content}} </p>
+        <p>Author: {{ post.author.first_name }} {{ post.author.last_name }}</p>
+        <p>Category:
+
+            {% for cat in post.category.all %}
+            
+            <button class='btn btn-secondary m-2 p-1'>{{ cat.name }}</button>
+            
+            {% endfor %}
+
+
+        </p>
+
+
+        <a href="{% url "edit_post" post.id %}" class='btn btn-warning m-1'>Edit</a>
+        <a href="{% url "delete_post" post.id %}" class='btn btn-danger m-1'>Delete</a>
+         
+
+      </div>
+    </div>
+  </div>
+
+    {% endfor %}
+
+  </div>
+
+{% endblock content %}
